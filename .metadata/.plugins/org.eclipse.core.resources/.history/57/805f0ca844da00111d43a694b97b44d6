@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, homePage!</string>
+    <string name="app_name">WedAssist</string>
+    <string name="rol_Bride">Decide on wedding date, type of ceremony and theme with the groom</string>
+    <string name="rol_Groom">Decide on wedding date, type of ceremony and theme with the bride</string>
+    <string name="logIn">Log into WedAssist...</string>
+    <string name="txtName">Forename Surname</string>
+    <string name="txtAddress">Address</string>
+    <string name="txtTelephone">Telephone (Mobile)</string>
+    <string name="spnRole">Role</string>
+    <string name="txtNotes">Notes</string>
+    <string name="defaultStatus">Status is undefined</string>
+    <string name="txtEmail">someone@somewhere.com</string>
+    <string name="btnGuestList">Load Guest List</string>
+    <string name="rowName">Matthew Swain</string>
+    <string name="rowPhone">+44 7889 404519</string>
+    <string name="rowExtras">+1</string>
+
+</resources>

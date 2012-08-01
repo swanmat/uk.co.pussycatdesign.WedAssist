@@ -1,0 +1,22 @@
+package uk.co.pussycatdesign.WedAssist;
+
+import uk.co.pussycatdesign.Data.DbFactory;
+import uk.co.pussycatdesign.Data.DbManagedList;
+import uk.co.pussycatdesign.Data.DbResultSet;
+import uk.co.pussycatdesign.WedAssist.Db.GuestDataTable;
+import uk.co.pussycatdesign.WedAssist.Db.WedAssistDb;
+
+public class GuestList extends DbManagedList<Guest, GuestDataTable, WedAssistDb> {
+
+	public GuestList(DbFactory<GuestDataTable, WedAssistDb> factory) {
+		super(factory);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	protected boolean parseResult(DbResultSet resultSet) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

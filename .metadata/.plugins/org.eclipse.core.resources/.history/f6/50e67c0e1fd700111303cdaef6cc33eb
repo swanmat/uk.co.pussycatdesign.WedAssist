@@ -1,0 +1,14 @@
+package uk.co.pussycatdesign.App.WedAssist.Db;
+
+import uk.co.pussycatdesign.Data.DbColumn;
+import uk.co.pussycatdesign.Data.iDataTable;
+
+public final class TestTable implements iDataTable {
+
+	public static DbColumn[] getDataColumns() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+}

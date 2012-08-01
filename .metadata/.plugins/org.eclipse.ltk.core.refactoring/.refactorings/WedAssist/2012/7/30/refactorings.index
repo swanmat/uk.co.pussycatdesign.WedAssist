@@ -1,0 +1,15 @@
+1343033813295	Rename field 'DB_VERSION'
+1343037544521	Extracts string 'null' into R.string.btnGuestList
+1343056392466	Rename type 'DbManagedList'
+1343056538660	Rename type 'GuestList'
+1343130756756	Move compilation unit
+1343294859763	Delete element
+1343295202250	Rename package 'uk.co.pussycatdesign.WedAssist'
+1343295254499	Rename package 'uk.co.pussycatdesign.WedAssist.Activities'
+1343295278218	Rename package 'uk.co.pussycatdesign.WedAssist.Db'
+1343306418515	Delete element
+1343306431490	Delete element
+1343306444261	Delete element
+1343382558026	Extracts string 'null' into R.string.rowName
+1343382603574	Extracts string 'null' into R.string.rowPhone
+1343382627308	Extracts string 'null' into R.string.rowExtras

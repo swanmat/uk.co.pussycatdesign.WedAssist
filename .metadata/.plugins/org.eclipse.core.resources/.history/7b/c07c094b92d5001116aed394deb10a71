@@ -1,0 +1,38 @@
+package uk.co.pussycatdesign.WedAssist;
+
+import uk.co.pussycatdesign.Data.DbFactory;
+import uk.co.pussycatdesign.Data.DbManagedList;
+import uk.co.pussycatdesign.Data.DbResult;
+import uk.co.pussycatdesign.Data.DbResultSet;
+import uk.co.pussycatdesign.WedAssist.Db.GuestDataTable;
+import uk.co.pussycatdesign.WedAssist.Db.WedAssistDb;
+
+public class GuestList extends DbManagedList<Guest, GuestDataTable, WedAssistDb> {
+	
+	public GuestList(DbFactory<GuestDataTable, WedAssistDb> factory) {
+		super(factory);
+	}
+
+	@Override
+	protected boolean parseResult(DbResultSet resultSet) {
+		
+		String columnNames[] = resultSet.getDbColumns();
+		
+		for (int index = 0; index < resultSet.size(); index ++)
+		{
+			DbResult result = resultSet.get(index);
+			
+			for (int column = 0; column < columnNames.length; column++)
+			{
+				String columnName = columnNames[column];
+				
+				Guest thisGuest = new Guest();
+				
+				switch
+			}
+			
+			
+		}
+	}
+
+}

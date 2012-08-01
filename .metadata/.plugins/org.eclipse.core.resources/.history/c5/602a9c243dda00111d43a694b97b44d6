@@ -1,0 +1,57 @@
+package uk.co.pussycatdesign;
+
+import java.util.ArrayList;
+
+import uk.co.pussycatdesign.App.WedAssist.Guest;
+import uk.co.pussycatdesign.App.WedAssist.GuestList;
+import android.app.Activity;
+import android.content.Context;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+public class guestListActivity extends Activity 
+{
+	private ListView guestView;
+	//private ArrayAdapter<Guest> guestListAdapter;	
+	protected GuestList guestList;
+	private GuestListAdapter guestListAdapter = null;
+	
+	@Override 
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		this.setContentView(R.layout.guestlist);
+		this.connectToView();
+	}
+	
+	private void connectToView()
+	{
+		guestList = new GuestList();
+		guestList.loadView();
+		
+		guestListAdapter = new GuestListAdapter(this, R.layout.row, guestList);
+		
+		this.guestView = (ListView) findViewById(R.id.lvGuests);
+	
+		View header = (View) getLayoutInflater().inflate(R.layout.guestlist_table_header, null);
+		guestView.addHeaderView(header);
+		guestView.setAdapter(guestListAdapter);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		finish();
+	}	
+}
+

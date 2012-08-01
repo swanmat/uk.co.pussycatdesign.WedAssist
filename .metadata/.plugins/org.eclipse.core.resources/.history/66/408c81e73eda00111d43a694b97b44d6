@@ -1,0 +1,92 @@
+package uk.co.pussycatdesign.App.WedAssist.Activities;
+
+import uk.co.pussycatdesign.R;
+import uk.co.pussycatdesign.App.WedAssist.Guest;
+import uk.co.pussycatdesign.App.WedAssist.GuestList;
+import android.content.Context;
+import android.app.Activity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+public class GuestListAdapter extends ArrayAdapter<Guest>
+{
+	Context context = null;
+	int layoutId = 0;
+	GuestList guestList = null;
+	
+	public GuestListAdapter(Context context, int layoutId, GuestList list)
+	{
+		super(context, layoutId, list);
+		this.context = context;
+		this.layoutId = layoutId;
+		this.guestList = list;
+	}
+	
+	@Override 
+	public View getView(int position, View convertView, ViewGroup parent)
+	{
+		
+		View row = convertView;
+		GuestHolder holder = null;
+		
+		if (row == null)
+		{
+			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+			//row = LayoutInflater.from(context).inflate(R.layout.row, parent, false);
+			//LayoutInflater layoutInflater = (LayoutInflater) context 
+		            //.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			
+			row = layoutInflater.inflate(R.layout.row2, parent, false);
+			holder = new GuestHolder();
+			
+			holder.ivPic = (ImageView) row.findViewById(R.id.ivPic);
+			holder.ivAttend = (ImageView) row.findViewById(R.id.ivAttend);
+			holder.tvName= (TextView) row.findViewById(R.id.tvName);
+			holder.tvPhone= (TextView) row.findViewById(R.id.tvPhone);
+			holder.tvExtras= (TextView) row.findViewById(R.id.tvExtras);
+			
+			row.setTag(holder);
+		}
+		else
+		{
+			holder = (GuestHolder) row.getTag();
+		}
+		
+		Guest guest = guestList.get(position);
+		
+		holder.tvName.setText(guest.getForename());
+		holder.tvPhone.setText(guest.getTelephone());
+		
+		return (row);
+	}
+	
+	static class GuestHolder
+	{
+		 ImageView ivPic;
+		 ImageView ivAttend; 
+		 TextView tvName;
+		 TextView tvPhone;
+		 TextView tvExtras;
+
+		/*GuestHolder(View row)
+		{
+			
+			ivPic = (ImageView) row.findViewById(R.id.ivPic);
+			ivAttend = (ImageView) row.findViewById(R.id.ivAttend);
+			tvName= (TextView) row.findViewById(R.id.tvName);
+			tvPhone= (TextView) row.findViewById(R.id.tvPhone);
+			tvExtras= (TextView) row.findViewById(R.id.tvExtras);
+		}
+		
+	    void populateFrom(Guest guest) 
+		{
+			tvName.setText(guest.getForename());
+			tvPhone.setText(guest.getTelephone());
+			//TODO: Further context specific getters need to be inserted here
+		}*/
+	}
+}

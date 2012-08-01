@@ -1,0 +1,24 @@
+1341839260387	Delete element
+1341841179941	Rename resource 'ParchmentBackground.jpg'
+1341841190083	Rename resource 'WeddingCake.jpg'
+1341841206070	Rename resource 'WeddingRings.jpg'
+1341841217796	Rename resource 'weddingcake'
+1341841248570	Rename resource 'parchment'
+1342004397612	Extracts string 'null' into R.string.txtName
+1342004486113	Extracts string 'null' into R.string.txtAddress
+1342004552869	Extracts string 'null' into R.string.txtTelephone
+1342004867998	Extracts string 'null' into R.string.spnRole
+1342004948873	Extracts string 'null' into R.string.txtNotes
+1342007878747	Rename resource 'WedAssist.png'
+1342009576454	Delete element
+1342017360126	Rename resource '1.png'
+1342017370449	Rename resource '2.png'
+1342017390601	Rename resource '3.png'
+1342017402226	Rename resource '4.png'
+1342017421128	Rename resource '5.png'
+1342017437501	Rename resource '6.png'
+1342017444084	Rename resource '7.png'
+1342179433129	Extracts string 'null' into R.string.defaultStatus
+1342185850402	Move compilation unit
+1342185889101	Rename type 'GuestActivity'
+1342190754530	Extracts string 'null' into R.string.txtEmail

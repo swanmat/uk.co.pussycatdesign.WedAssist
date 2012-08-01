@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:orientation="horizontal" android:padding="4dip">
+
+    <ImageView 
+        android:name="@+id/ivPic"
+        android:contentDescription="image"
+        android:src="@drawable/contact"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:scaleType="fitCenter"
+      	android:layout_weight="1">
+    </ImageView>
+   
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_weight="4"
+        android:padding="5dp"
+        android:orientation="vertical" >
+    
+        <TextView
+            android:name="@+id/tvName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rowName"
+            android:textSize="20dp" >
+        </TextView>
+        
+         <TextView
+             android:name="@+id/tvPhone"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:text="@string/rowPhone"
+             android:textSize="10dp" >
+        </TextView>    
+    </LinearLayout>
+  
+     <TextView
+         android:name="@+id/tvExtras"
+         android:layout_width="0dp"
+         android:layout_height="fill_parent"
+         android:layout_weight="1"
+         android:gravity="center"
+         android:text="@string/rowExtras"
+         android:textSize="20dp" >
+
+     </TextView>
+     
+     <ImageView 
+        android:name="@+id/ivAttend"
+        android:contentDescription="image"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/tick"
+      	android:layout_weight="1">
+    </ImageView>
+    
+     <ImageButton
+        android:name="@+id/ibPhone"
+        android:contentDescription="image"
+        android:layout_width="0dp"
+        android:src="@drawable/blower"
+        android:layout_height="fill_parent"
+        android:scaleType="fitCenter"
+        android:background="@null"
+      	android:layout_weight="2">
+    </ImageButton>
+</LinearLayout>

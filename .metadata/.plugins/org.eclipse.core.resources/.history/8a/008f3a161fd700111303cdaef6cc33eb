@@ -1,0 +1,6 @@
+package uk.co.pussycatdesign.Data;
+
+public interface iDataTable 
+{
+	public DbColumn[] getDataColumns();
+}

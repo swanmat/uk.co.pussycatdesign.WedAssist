@@ -1,0 +1,35 @@
+/* 25/06/2012
+ * RoleList - Matt Swain 
+ * PussyCatDesign Copyright 2012
+ * 
+ */
+
+package uk.co.pussycatdesign.WedAssist;
+
+import android.content.Context;
+import uk.co.pussycatdesign.Data.DbFactory;
+import uk.co.pussycatdesign.Data.DbResultSet;
+import uk.co.pussycatdesign.WedAssist.Db.RoleDataTable;
+import uk.co.pussycatdesign.WedAssist.Db.WedAssistDb;
+
+public class RoleList extends DbManagedList<Role, RoleDataTable, WedAssistDb>{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1118159611287347533L;
+
+	public RoleList(Context context) {
+		super(new RoleDataTable(), new WedAssistDb(context));
+		
+		this.loadList();
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	protected boolean parseResult(DbResultSet resultSet) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

@@ -1,0 +1,9 @@
+1341228068191	Rename type 'DbFieldValue'
+1341404097751	Encapsulate field 'dbColumns'
+1341410103794	Delete element
+1341482910773	Rename type 'DataTableDescriptor'
+1341482929575	Move compilation unit
+1341483063792	Move compilation unit
+1341483174291	Rename type 'WedAssistEntities'
+1341483206125	Move compilation unit
+1341483300182	Rename package 'uk.co.pussycatdesign.WedAssist.DataTables'

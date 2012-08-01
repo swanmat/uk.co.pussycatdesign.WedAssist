@@ -1,0 +1,35 @@
+package uk.co.pussycatdesign.Data;
+
+import java.util.ArrayList;
+
+public abstract class SelfTrackingEntity  
+{
+	private EntityState state = EntityState.UNCHANGED;
+
+	/**
+	 * @return the state
+	 */
+	public EntityState getState() {
+		return state;
+	}
+	
+	public abstract ArrayList<String> getValues(boolean includeId);
+
+	/**
+	 * @param state the state to set
+	 */
+	protected void setState(EntityState state) {
+		// If State is New - do not modify to other state; except Deleted.
+		
+		if (this.state != EntityState.NEW)
+		{
+			this.state = state;
+		}
+		else if (state == EntityState.DELETED)
+		{
+			this.state = state;
+		}
+	}
+	
+	public abstract int getId();
+}

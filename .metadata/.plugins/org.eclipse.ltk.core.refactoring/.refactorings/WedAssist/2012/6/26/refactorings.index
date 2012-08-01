@@ -1,0 +1,30 @@
+1340615792240	Rename type 'DataModel'
+1340619210405	Extract interface 'DatabaseEntity'
+1340619247449	Move compilation unit
+1340625069989	Encapsulate field 'id'
+1340625092934	Encapsulate field 'pfk_guestId'
+1340625112024	Encapsulate field 'role'
+1340625117566	Encapsulate field 'otherInfo'
+1340627141396	Move compilation unit
+1340627170387	Move compilation unit
+1340627200536	Rename package 'uk.co.pussycatdesign.wedassist'
+1340629295438	Encapsulate field 'id'
+1340629307605	Encapsulate field 'Type'
+1340629313341	Encapsulate field 'Name'
+1340629321031	Encapsulate field 'pfk_GuestId'
+1340632056113	Change Layout
+1340632098464	Change Layout
+1340632261212	Delete element
+1340633973690	Rename resource 'AddPerson.png'
+1340633986953	Rename resource 'Contact.png'
+1340634277958	Move files
+1340807022978	Extract interface 'DataContext'
+1340807033498	Delete element
+1340807056098	Move compilation unit
+1340888501799	Delete element
+1340890421901	Move compilation unit
+1340891971907	Rename type 'ManagedList'
+1340892022769	Delete element
+1340893785181	Delete element
+1340968656136	Rename type 'DbFieldFactory'
+1341083424656	Delete element

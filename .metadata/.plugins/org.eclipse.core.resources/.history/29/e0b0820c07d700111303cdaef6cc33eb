@@ -1,0 +1,19 @@
+package uk.co.pussycatdesign.App.WedAssist;
+
+import android.content.Context;
+import uk.co.pussycatdesign.App.WedAssist.Db.ExtraDataTable;
+import uk.co.pussycatdesign.App.WedAssist.Db.WedAssistDb;
+import uk.co.pussycatdesign.Data.DbFactory;
+
+public class ExtraList extends DbFactory<ExtraDataTable, WedAssistDb>
+{
+	
+	public ExtraList(Context context) {
+		super(new ExtraDataTable(), new WedAssistDb(context));
+		
+		this.loadList();
+	}
+	
+	
+	
+}

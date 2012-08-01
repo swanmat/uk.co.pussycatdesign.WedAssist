@@ -1,0 +1,281 @@
+package uk.co.pussycatdesign.Data;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.util.Log;
+import uk.co.pussycatdesign.Interfaces.DataContext;
+
+public class DbFactory<T extends DbTable, D extends DataContext>
+{
+		
+	private T referenceItem;
+	private D dataContext;
+	private List<DbColumn> tableDescriptor;
+	
+	public DbFactory(T ref, D db)
+	{
+		this.referenceItem = ref;
+		this.dataContext = db;
+		this.tableDescriptor = referenceItem.getTableDescriptor();
+	}
+	
+	public DbResultSet query(String[] columns, String selection, String[] selectionArgs,
+			String groupBy, String having, String orderBy)
+	{
+		Cursor res = null;
+		String tableName = referenceItem.getTableName();
+		
+		res = dataContext.open().query(tableName, columns, selection,
+				selectionArgs, groupBy, having, orderBy);
+		
+		if (res != null)
+		{
+			DbResultSet rSet = new DbResultSet();
+			
+			rSet = loadResults(res);
+			
+			Log.w("WedAssist:DbFactory", String.format
+					("%s successfully loaded into result set", "Custom Query"));
+			
+			res.close();
+			
+			return rSet;
+		}
+		else
+		{
+			Log.w("WedAssist:DbFactory", String.format("WedAssistDb:DbFactory,",
+					String.format("Loading of  %s Failed. SQL Error.", "Custom Query")));
+		}
+		
+		return null;
+	}
+
+	public DbResultSet loadView()
+	{
+		if (!(referenceItem.getViewName() == null))
+		{
+			String sql = "SELECT * FROM " + referenceItem.getViewName();
+			Cursor res = null;
+			DbResultSet rSet = null;
+			
+			res = dataContext.open().rawQuery(sql, null);
+				
+			if (res != null)
+			{
+				rSet = loadResults(res);
+				
+				Log.w("WedAssist:DbFactory", String.format
+						("%s successfully loaded into result set", referenceItem.getViewName()));
+				
+				res.close();
+				
+				return rSet;
+			}
+			else
+			{
+				Log.w("WedAssist:DbFactory", String.format("WedAssistDb:DbFactory,",
+						String.format("Loading of View %s Failed. SQL Error.", referenceItem.getViewName())));
+			}
+		}
+		else
+		{
+			Log.w("WedAssist:DbFactory", String.format("No View Defined for context: %s. *.* Loaded",
+					referenceItem.getTableName()));
+			return loadList();
+		}
+		
+		return null;
+	}
+	
+	public DbResultSet loadList() // Returns all values based on Generic Type.GetTableColumns
+	{
+		if (!(tableDescriptor.isEmpty()))
+		{
+			DbResultSet rSet = null;
+			
+			Cursor results = dataContext.open().query(referenceItem.getTableName(), null,
+					null, null, null, null, null);
+			
+			rSet = loadResults(results);
+			
+			results.close();
+			
+			return rSet;
+		}
+		else
+		{
+			return null;
+		}
+	}
+	
+	private DbResultSet loadResults(Cursor results) {
+		DbResultSet res = new DbResultSet();
+		
+		res.setDbColumns(results.getColumnNames());
+		
+		while (results.moveToNext())
+		{
+			//int rowIndex = results.getPosition();
+			DbResult thisRecord = getDbResult(results);
+			res.add(thisRecord);
+			Log.w("WedAssist:DbFactory" ,thisRecord.getString());
+		}
+		
+		return res;
+	}
+
+	public DbResult get(int index)
+	{
+		String selection = String.format("%s=?", referenceItem.getPrimaryKey());
+		String selectionArgs[] = {String.valueOf(index)};
+		
+		return getDbResult(dataContext.open().query(this.referenceItem.getTableName(),
+				null, selection, selectionArgs, null, null, null));
+	}
+	
+	private DbResult getDbResult(Cursor results) throws IllegalArgumentException // Magic of Polymorphism happens here!
+	{
+		DbResult singleton = null;
+		
+		ListIterator<DbColumn> iterator = tableDescriptor.listIterator(0);
+		
+		// Current Row is set! - This has been incremented in this.loadResults(Cursor results)
+		
+		singleton = new DbResult(); 
+		
+		while(iterator.hasNext())
+		{
+			DbColumn current = iterator.next(); // Iterate to the next column in Table Descriptor
+			
+			try
+			{
+				int columnIndex = results.getColumnIndex
+						(current.getColumnName());
+				if (columnIndex != -1)
+				{
+					singleton.addElement(convertSQLite3DataType(columnIndex, current, results));
+				}
+			}
+			catch (IllegalArgumentException e)
+			{
+				throw new IllegalArgumentException(e.toString());
+			}	
+		}
+
+		return singleton;
+	}
+
+	private Object convertSQLite3DataType(int columnIndex, DbColumn current, Cursor results) {
+		
+		switch (current.getColumnType())
+		{
+			case BLOB:
+				return results.getBlob(columnIndex);
+			case BOOLEAN:
+				return results.getInt(columnIndex)>0;
+			case DOUBLE:
+				return results.getDouble(columnIndex);
+			case FLOAT:
+				return results.getFloat(columnIndex);
+			case INT:
+				return results.getInt(columnIndex);
+			case LONG:
+				return results.getLong(columnIndex);
+			case SHORT:
+				return results.getShort(columnIndex);
+			case STRING:
+				return results.getString(columnIndex);
+			default:
+				return null;
+		}
+	}
+
+	public long addItem(ArrayList<String> values) throws UnsupportedOperationException
+	{
+		ArrayList<String> columns = referenceItem.getTableColumns(true);
+		
+		ContentValues vals = this.combine(columns, values);
+		
+		if (vals != null)
+		{
+			try
+			{
+				long result = dataContext.open().insert(referenceItem.getTableName(), vals);
+				dataContext.close();
+				return result;
+			}
+			catch(Exception e)
+			{
+				throw new UnsupportedOperationException(e.toString());
+			}
+		}
+		else
+		{
+			return -1 ;
+			
+		}
+	}
+	
+	private ContentValues combine(ArrayList<String> columns, ArrayList<String> values)
+	{
+		ContentValues vals = null;
+		
+		if(columns.size() == values.size())
+		{
+			System.out.println("WA: Content Col/Val Match");
+			vals = new ContentValues();
+			
+			for (int i = 0; i<= columns.size() -1; i++)
+			{
+				vals.put(columns.get(i), values.get(i));
+			}
+		}
+		else
+		{
+			System.out.println("WA: Content Col/Val Mismatch: Null Returned");
+		}
+		return vals;
+	}
+	
+	public long removeItem(int id) throws UnsupportedOperationException
+	{
+		try
+		{
+			long result = dataContext.open().delete(this.referenceItem.getTableName(), 
+					this.referenceItem.getPrimaryKey()+"=?", new String[] {String.valueOf(id)});
+			dataContext.close();
+			
+			Log.w("WedAssist:DbFactory.RemoveItem", String.format("Query Completed Successfully: %s item(s) removed.",
+					String.valueOf(result)));
+			
+			return result;
+		}
+		catch(UnsupportedOperationException e)
+		{
+			throw new UnsupportedOperationException(e.toString());
+		}
+	}
+	
+	public long removeWhere(String whereClause, String[] whereArgs ) throws UnsupportedOperationException
+	{
+		try
+		{
+			long result = dataContext.open().delete(this.referenceItem.getTableName(), 
+					whereClause, whereArgs);
+			
+			Log.w("WedAssist:DbFactory.RemoveWhere", String.format("Query Completed Successfully: %s item(s) removed.",
+					String.valueOf(result)));
+			
+			dataContext.close();
+			return result;
+		}
+		catch(UnsupportedOperationException e)
+		{
+			throw new UnsupportedOperationException(e.toString());
+		}
+	}
+}

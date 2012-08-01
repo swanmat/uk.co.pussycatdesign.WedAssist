@@ -1,0 +1,26 @@
+package uk.co.pussycatdesign.App.WedAssist;
+
+import android.content.Context;
+import uk.co.pussycatdesign.App.WedAssist.Db.ExtraDataTable;
+import uk.co.pussycatdesign.App.WedAssist.Db.WedAssistDb;
+import uk.co.pussycatdesign.Data.DbFactory;
+import uk.co.pussycatdesign.Data.DbManagedList;
+import uk.co.pussycatdesign.Data.DbResult;
+
+public class ExtraList extends DbManagedList<Extra, ExtraDataTable, WedAssistDb>
+{
+	private static final long serialVersionUID = 6913330888186014145L;
+
+	public ExtraList() {
+		super(new DbFactory<ExtraDataTable, WedAssistDb>(new ExtraDataTable(), new WedAssistDb()));
+	}
+
+	@Override
+	protected Extra parse(String[] columns, DbResult item) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	
+}

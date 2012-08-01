@@ -1,0 +1,27 @@
+package uk.co.pussycatdesign.App.WedAssist;
+
+import uk.co.pussycatdesign.App.WedAssist.Db.GuestDataTable;
+import uk.co.pussycatdesign.App.WedAssist.Db.WedAssistDb;
+import uk.co.pussycatdesign.Data.DbFactory;
+import uk.co.pussycatdesign.Data.DbManagedList;
+import uk.co.pussycatdesign.Data.DbResult;
+import uk.co.pussycatdesign.Data.DbResultSet;
+
+public class GuestList extends DbManagedList<Guest, GuestDataTable, WedAssistDb> {
+	
+	private static final long serialVersionUID = 7069688655390631494L;
+
+	public GuestList(DbFactory<GuestDataTable, WedAssistDb> factory) {
+		super(factory);
+	}
+
+	@Override
+	protected Guest parse(String[] columnNames, DbResult item) {
+		
+		Guest thisGuest = new Guest();
+		thisGuest.parseValues(columnNames, item.getResultSet().toArray());
+		return thisGuest;
+	}
+
+	
+}

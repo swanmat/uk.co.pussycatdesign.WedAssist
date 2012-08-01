@@ -1,0 +1,34 @@
+package uk.co.pussycatdesign.WedAssist;
+
+import java.util.ArrayList;
+
+import android.content.Context;
+import uk.co.pussycatdesign.Data.DbFactory;
+import uk.co.pussycatdesign.Data.DbResultSet;
+import uk.co.pussycatdesign.Data.DbTable;
+import uk.co.pussycatdesign.Data.SelfTrackingEntity;
+import uk.co.pussycatdesign.Interfaces.DataContext;
+import uk.co.pussycatdesign.WedAssist.Db.GuestDataTable;
+import uk.co.pussycatdesign.WedAssist.Db.WedAssistDb;
+
+public abstract class DbManagedList<E extends SelfTrackingEntity,
+		T extends DbTable, D extends DataContext> extends ArrayList<E>
+{
+
+	private static final long serialVersionUID = 6081997360864094951L;
+	
+	private DbFactory<T, D> factory = null;
+
+	public DbManagedList(Context c, DbFactory<T, D> factory) 
+	{
+		this.factory = factory;
+		
+		
+	}
+	
+	protected abstract boolean convert(DbResultSet resultSet);
+
+	
+		
+}
+

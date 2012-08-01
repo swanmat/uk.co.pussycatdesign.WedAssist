@@ -1,0 +1,237 @@
+package uk.co.pussycatdesign.WedAssist;
+
+import java.util.ArrayList;
+
+import uk.co.pussycatdesign.Data.SelfTrackingEntity;
+
+public class Guest extends SelfTrackingEntity {
+	
+	protected static final String TBL_GUESTS_ID = "Id";
+	protected static final String PRIMARY_KEY = "Id";
+	protected static final String TBL_GUESTS_PHOTO = "Photo";
+	protected static final String TBL_GUESTS_FNAME = "FName";
+	protected static final String TBL_GUESTS_SNAME = "SName";
+	protected static final String TBL_GUESTS_TEL = "Tel";
+	protected static final String TBL_GUESTS_EMAIL = "Email";
+	protected static final String TBL_GUESTS_EXTRAS = "Extras";
+	protected static final String TBL_GUESTS_INVITES = "Invites";
+	//protected static final String TBL_GUESTS_INVITATION = "Invitation";
+	//protected static final String TBL_GUESTS_RSVP = "RSVP";
+	protected static final String TBL_GUESTS_NOTES = "Notes";
+	protected static final String TBL_GUESTS_ROLE = "Role";
+	
+	// Internal Fields
+	private Role role;
+	private Invites invites;
+	private ExtraList extras;
+	private Table table;
+	private long id = -1;
+	private long photo;
+	private String fname;
+	private String sname;
+	private String tel;
+	private String email;
+	private String notes;
+	
+	@Override
+	public void parseValues(String[] columns, Object[] values) {
+		
+		for (int column = 0; column < columns.length; column ++)
+		{
+			String columnName = columns[column];
+			Object columnValue = values[column];
+			
+			switch (columnName)
+			{
+				case TBL_GUESTS_ID:
+					this.setId((long) columnValue);
+					break;
+				case TBL_GUESTS_PHOTO:
+					this.setPhoto((long) columnValue);
+					break;
+				case TBL_GUESTS_FNAME:
+					this.setForename((String) columnValue);
+					break;
+				case TBL_GUESTS_SNAME:
+					this.se
+					break;
+				case TBL_GUESTS_TEL:
+					break;
+				case TBL_GUESTS_EMAIL:
+					break;
+				case TBL_GUESTS_EXTRAS:
+					break;
+				case TBL_GUESTS_INVITES:
+					break;
+				case TBL_GUESTS_NOTES:
+					break;
+				case TBL_GUESTS_ROLE:
+					break;
+			}
+		}
+	}
+	
+	@Override
+	public ArrayList<String> getValues(boolean id) 
+	{
+		ArrayList<String> values = new ArrayList<String>();
+		if (id)
+		{
+			values.add(String.valueOf(this.id));
+		}
+		values.add(String.valueOf(this.photo));
+		values.add(this.fname);
+		values.add(this.sname);
+		values.add(this.tel);
+		values.add(this.email);
+		values.add(this.notes);
+		
+		return values;
+	}
+	
+	//Constructor
+	public Guest(long Id,
+			long photo,
+			String forename,
+			String surname,
+			String telephone,
+			String email,
+			String notes)
+	{
+		this.id=Id;
+		this.photo = photo;
+		this.fname = forename;
+		this.sname = surname;
+		this.tel = telephone;
+		this.email = email;
+		this.notes = notes;
+	}
+	
+	public Guest(long photo,
+			String forename,
+			String surname,
+			String telephone,
+			String email,
+			String notes)
+	{
+		this.photo = photo;
+		this.fname = forename;
+		this.sname = surname;
+		this.tel = telephone;
+		this.email = email;
+		this.notes = notes;
+	}
+	
+	
+	public Guest() {
+		// TODO Auto-generated constructor stub
+	}
+
+	//Public Properties
+	public Role getRole()
+	{
+		return this.role;
+	}
+	
+	public void setRole(Role role){
+		this.role=role;
+	}	
+	
+	public Invites getInvites(){
+		return this.invites;
+	}
+	
+	public void setInvites(Invites invites)
+	{
+		this.invites=invites;
+	}
+	
+	public Table getTable()
+	{
+		return this.table;
+	}
+		
+	public void setTable(Table table)
+	{
+		this.table=table;
+	}
+	
+	public ExtraList getExtras()
+	{
+		return this.extras;
+	}
+	
+	public void setExtras(ExtraList extras)
+	{
+		this.extras = extras;
+	}
+	
+	public long getID()
+	{
+		return this.id;
+	}
+	
+	public void setId(long id)
+	{
+		this.id=id;
+	}
+	
+	public long getPhoto()
+	{
+		return this.photo;
+	}
+	
+	public void setPhoto(long id)
+	{
+		this.photo=id;
+	}
+	
+	public String getForename()
+	{
+		return this.fname;
+	}
+		
+	public void setForename(String foreName){
+		this.fname = foreName;
+	}
+	
+	public void setSurname(String surname) {
+		this.sname=surname;
+	}
+	
+	public String getSurname(){
+		return this.sname;
+	}
+
+	public void setTelephone(String telephone){
+		this.tel=telephone;
+	}
+	
+	public String getTelephone(){
+		return this.tel;
+	}
+	
+	public String getEmail(){
+		return this.email;
+	}
+	
+	public String getNotes(){
+		return this.notes;
+	}
+	
+	public void setNotes(String notes){
+		 this.notes = notes;
+	}
+	
+	
+	public void addNote(String note)
+	{
+		this.notes = this.notes + note;
+	}
+
+	@Override
+	public int getId() {
+		// TODO Auto-generated method stub
+		return (int)id;
+	}
+}

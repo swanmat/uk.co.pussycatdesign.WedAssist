@@ -1,0 +1,107 @@
+package uk.co.pussycatdesign.App.WedAssist;
+
+import java.util.ArrayList;
+
+import uk.co.pussycatdesign.Data.EntityState;
+import uk.co.pussycatdesign.Data.SelfTrackingEntity;
+
+public class Extra extends SelfTrackingEntity {
+	
+	private int id;
+	private ExtraType type;
+	private String name;
+	private int pfk_GuestId;
+	
+	public Extra(String Name, ExtraType Type, int GuestId)
+	{
+		this.name = Name;
+		this.type = Type;
+		this.pfk_GuestId = GuestId;
+		this.setState(EntityState.NEW);
+	}
+	
+	public Extra(int Id, String Name, ExtraType Type, int GuestId)
+	{
+		this.id = Id;
+		this.name = Name;
+		this.type = Type;
+		this.pfk_GuestId = GuestId;
+		this.setState(EntityState.UNCHANGED);
+	}
+	
+
+	public Extra() {
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public ArrayList<String> getValues(boolean includeId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void parseValues(String[] columns, Object[] values) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id)
+	{
+		this.id=id;
+		this.setState(EntityState.UNCHANGED);
+	}
+
+	/**
+	 * @return the type
+	 */
+	public ExtraType getType() {
+		return type;
+	}
+	
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(ExtraType type) {
+		this.type = type;
+		this.setState(EntityState.CHANGED);
+	}
+	
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+	
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+		this.setState(EntityState.CHANGED);
+	}
+	
+	/**
+	 * @return the pfk_GuestId
+	 */
+	public int getGuestId() {
+		return pfk_GuestId;
+	}
+	
+	/**
+	 * @param pfk_GuestId the pfk_GuestId to set
+	 */
+	public void setGuestId(int pfk_GuestId) {
+		this.pfk_GuestId = pfk_GuestId;
+		this.setState(EntityState.CHANGED);
+	}
+
+}
