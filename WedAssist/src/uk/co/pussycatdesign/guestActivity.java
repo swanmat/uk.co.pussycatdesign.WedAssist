@@ -80,7 +80,6 @@ public class guestActivity extends Activity
 		this.setContentView(R.layout.guestmain);
 		connectToView();
 		subscribeToHandlers();
-		//guestList = new GuestList(new DbFactory<GuestDataTable, WedAssistDb>(new GuestDataTable(), new WedAssistDb(this)));
 		
 		guestList = new GuestList();
 		
