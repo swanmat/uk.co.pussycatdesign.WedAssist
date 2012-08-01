@@ -2,6 +2,8 @@ package uk.co.pussycatdesign.App.WedAssist;
 
 import java.util.ArrayList;
 
+import android.content.ContentValues;
+
 import uk.co.pussycatdesign.Data.EntityState;
 import uk.co.pussycatdesign.Data.SelfTrackingEntity;
 
@@ -94,6 +96,12 @@ public class Role extends SelfTrackingEntity{
 
 	@Override
 	public void parseValues(String[] columns, Object[] values) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void parseValues(ContentValues contentValues) {
 		// TODO Auto-generated method stub
 		
 	}

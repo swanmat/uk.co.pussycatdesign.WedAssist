@@ -1,7 +1,9 @@
 package uk.co.pussycatdesign.Data;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.ListIterator;
 
 import android.util.Log;
 
@@ -40,6 +42,23 @@ public abstract class DbTable {  //NB TODO: Make Generic Static DB Table class w
 	public List<DbColumn> getTableDescriptor() //throw exception here: no values in list
 	{
 		return this.values;
+	}
+	
+	public Hashtable<String, Object> getTableSchema()
+	{
+		int columnCount = values.size();
+		
+		Hashtable<String, Object> schema = new Hashtable<String, Object>(columnCount);
+		
+		ListIterator<DbColumn> list = values.listIterator(0);
+		
+		while(list.hasNext())
+		{
+			DbColumn currentColumn = list.next();
+			schema.put(currentColumn.getColumnName(), currentColumn);
+		}
+		
+		return schema;
 	}
 	
 	public String getPrimaryKey()

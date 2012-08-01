@@ -1,6 +1,7 @@
 package uk.co.pussycatdesign.Data;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -14,13 +15,16 @@ public class DbFactory<T extends DbTable, D extends DataContext>
 		
 	private T referenceItem;
 	private D dataContext;
-	private List<DbColumn> tableDescriptor;
+	//private List<DbColumn> tableDescriptor;
+	private Hashtable<String, Object> tableSchema;
+	//private Cursor results;
 	
 	public DbFactory(T ref, D db)
 	{
 		this.referenceItem = ref;
 		this.dataContext = db;
-		this.tableDescriptor = referenceItem.getTableDescriptor();
+		//this.tableDescriptor = referenceItem.getTableDescriptor();
+		this.tableSchema = referenceItem.getTableSchema();
 	}
 	
 	public DbResultSet query(String[] columns, String selection, String[] selectionArgs,
@@ -93,7 +97,7 @@ public class DbFactory<T extends DbTable, D extends DataContext>
 	
 	public DbResultSet loadList() // Returns all values based on Generic Type.GetTableColumns
 	{
-		if (!(tableDescriptor.isEmpty()))
+		if (!(tableSchema.isEmpty()))
 		{
 			DbResultSet rSet = null;
 			
@@ -120,7 +124,7 @@ public class DbFactory<T extends DbTable, D extends DataContext>
 		while (results.moveToNext())
 		{
 			//int rowIndex = results.getPosition();
-			DbResult thisRecord = getDbResult(results);
+			DbResult thisRecord = getResult(results); //getDbResult(results);
 			res.add(thisRecord);
 			Log.w("WedAssist:DbFactory" ,thisRecord.getString());
 		}
@@ -133,66 +137,65 @@ public class DbFactory<T extends DbTable, D extends DataContext>
 		String selection = String.format("%s=?", referenceItem.getPrimaryKey());
 		String selectionArgs[] = {String.valueOf(index)};
 		
-		return getDbResult(dataContext.open().query(this.referenceItem.getTableName(),
+		return getResult(dataContext.open().query(this.referenceItem.getTableName(),
 				null, selection, selectionArgs, null, null, null));
 	}
 	
-	private DbResult getDbResult(Cursor results) throws IllegalArgumentException // Magic of Polymorphism happens here!
+	private DbResult getResult(Cursor resultSet)
 	{
-		DbResult singleton = null;
+		DbResult singleton = new DbResult();
 		
-		ListIterator<DbColumn> iterator = tableDescriptor.listIterator(0);
+		String[] columns = resultSet.getColumnNames();
 		
-		// Current Row is set! - This has been incremented in this.loadResults(Cursor results)
+		ContentValues result = new ContentValues(columns.length);
 		
-		singleton = new DbResult(); 
-		
-		while(iterator.hasNext())
+		for (int i=0; i < columns.length; i++)
 		{
-			DbColumn current = iterator.next(); // Iterate to the next column in Table Descriptor
-			
-			Log.w("WedAssist:DbFactory.getDbResult", String.format("Current Column: %s", current.getColumnName()));
-			try
-			{
-				int columnIndex = results.getColumnIndex
-						(current.getColumnName());
-				if (columnIndex != -1)
-				{
-					singleton.addElement(convertSQLite3DataType(columnIndex, current, results));
-				}
-			}
-			catch (IllegalArgumentException e)
-			{
-				throw new IllegalArgumentException(e.toString());
-			}	
+			DbColumn currentColumn = (DbColumn) this.tableSchema.get(columns[i]);
+			loadContentValues(currentColumn, resultSet, result);
 		}
-
+		
+		singleton.setContent(result);
+		
 		return singleton;
 	}
-
-	private Object convertSQLite3DataType(int columnIndex, DbColumn current, Cursor results) {
+	
+	private ContentValues loadContentValues(DbColumn current, Cursor resultSet, ContentValues contentValues)
+	{
+		String key = current.getColumnName();
+		int columnIndex = resultSet.getColumnIndex(key);
 		
 		switch (current.getColumnType())
 		{
 			case BLOB:
-				return results.getBlob(columnIndex);
+				 contentValues.put(key, resultSet.getBlob(columnIndex));
+				 break;
 			case BOOLEAN:
-				return results.getInt(columnIndex)>0;
+				 contentValues.put(key, resultSet.getInt(columnIndex)>0);
+				 break;
 			case DOUBLE:
-				return results.getDouble(columnIndex);
+				 contentValues.put(key, resultSet.getDouble(columnIndex));
+				 break;
 			case FLOAT:
-				return results.getFloat(columnIndex);
+				 contentValues.put(key, resultSet.getFloat(columnIndex));
+				 break;
 			case INT:
-				return results.getInt(columnIndex);
+				 contentValues.put(key, resultSet.getInt(columnIndex));
+				 break;
 			case LONG:
-				return results.getLong(columnIndex);
+				 contentValues.put(key, resultSet.getLong(columnIndex));
+				 break;
 			case SHORT:
-				return results.getShort(columnIndex);
+				 contentValues.put(key, resultSet.getShort(columnIndex));
+				 break;
 			case STRING:
-				return results.getString(columnIndex);
+				 contentValues.put(key, resultSet.getString(columnIndex));
+				 break;
 			default:
-				return null;
+				contentValues.putNull(key);
+				break;
 		}
+		return contentValues;
 	}
 
 	public long addItem(ArrayList<String> values) throws UnsupportedOperationException

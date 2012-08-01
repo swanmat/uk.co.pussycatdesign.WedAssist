@@ -2,6 +2,8 @@ package uk.co.pussycatdesign.App.WedAssist;
 
 import java.util.ArrayList;
 
+import android.content.ContentValues;
+
 import uk.co.pussycatdesign.Data.SelfTrackingEntity;
 
 public class Guest extends SelfTrackingEntity {
@@ -23,7 +25,7 @@ public class Guest extends SelfTrackingEntity {
 	// Internal Fields
 	private Role role;
 	private Invites invites;
-	private ExtraList extras;
+	private int extras;
 	private Table table;
 	private int id = -1;
 	private int photo;
@@ -34,64 +36,43 @@ public class Guest extends SelfTrackingEntity {
 	private String notes;
 	
 	@Override
-	public void parseValues(String[] columns, Object[] values) {
+	public void parseValues(ContentValues contentValues) {
 		
-		for (int column = 0; column < columns.length; column ++)
+		if (contentValues.containsKey(PRIMARY_KEY))
 		{
-			String columnName = columns[column];
-			Object columnValue = values[column];
-			
-			
-				if(columnName.compareTo(TBL_GUESTS_ID) == 0)
-				{
-					Integer iVal = (Integer) columnValue;
-					this.setId(iVal.intValue());
-				}
-				else if (columnName.compareTo(TBL_GUESTS_PHOTO) == 0)
-				{
-					Integer iVal = (Integer) columnValue;
-					this.setPhoto(iVal.intValue());
-				}
-				else if (columnName.compareTo(TBL_GUESTS_FNAME) == 0)
-				{
-					this.setForename((String) columnValue);
-				}
-				else if (columnName.compareTo(TBL_GUESTS_SNAME) == 0)
-				{
-					setSurname((String) columnValue);
-				}
-				else if (columnName.compareTo(TBL_GUESTS_TEL) == 0)
-				{
-					setTelephone((String) columnValue);
-				}
-				else if (columnName.compareTo(TBL_GUESTS_EMAIL) == 0)
-				{
-					setEmail((String) columnValue);
-				}
-				else if (columnName.compareTo(TBL_GUESTS_EXTRAS) == 0)
-				{
-					/// TODO: Set Extas List
-				}
-				else if (columnName.compareTo(TBL_GUESTS_INVITES) == 0)
-				{
-					/// TODO: Add Invitee List
-				}
-				else if (columnName.compareTo(TBL_GUESTS_NOTES) == 0)
-				{
-					setNotes((String) columnValue);
-				}
-				else if (columnName.compareTo(TBL_GUESTS_ROLE) == 0)
-				{
-					// TODO: Add Role List
-				}
+			this.setId(contentValues.getAsInteger(PRIMARY_KEY));
+		}
+		if (contentValues.containsKey(TBL_GUESTS_PHOTO))
+		{
+			this.setPhoto(contentValues.getAsInteger(TBL_GUESTS_PHOTO));
+		}
+		if (contentValues.containsKey(TBL_GUESTS_FNAME))
+		{
+			this.setForename(contentValues.getAsString(TBL_GUESTS_FNAME));
+		}
+		if (contentValues.containsKey(TBL_GUESTS_SNAME))
+		{
+			this.setSurname(contentValues.getAsString(TBL_GUESTS_SNAME));
+		}
+		if (contentValues.containsKey(TBL_GUESTS_TEL))
+		{
+			this.setTelephone(contentValues.getAsString(TBL_GUESTS_TEL));
+		}
+		if (contentValues.containsKey(TBL_GUESTS_EXTRAS))
+		{
+			this.setExtras(contentValues.getAsInteger(TBL_GUESTS_EXTRAS));
+		}
+		if (contentValues.containsKey(TBL_GUESTS_NOTES))
+		{
+			this.setNotes(contentValues.getAsString(TBL_GUESTS_NOTES));
 		}
 	}
 	
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
 
+	
 	@Override
 	public ArrayList<String> getValues(boolean id) 
 	{
@@ -177,14 +158,14 @@ public class Guest extends SelfTrackingEntity {
 		this.table=table;
 	}
 	
-	public ExtraList getExtras()
+	public int getExtras()
 	{
 		return this.extras;
 	}
 	
-	public void setExtras(ExtraList extras)
+	public void setExtras(Integer integer)
 	{
-		this.extras = extras;
+		this.extras = integer;
 	}
 	
 	public long getID()

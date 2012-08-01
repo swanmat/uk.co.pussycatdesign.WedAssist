@@ -2,6 +2,8 @@ package uk.co.pussycatdesign.Data;
 
 import java.util.ArrayList;
 
+import android.content.ContentValues;
+
 public abstract class SelfTrackingEntity  
 {
 	private EntityState state = EntityState.UNCHANGED;
@@ -15,7 +17,7 @@ public abstract class SelfTrackingEntity
 	
 	public abstract ArrayList<String> getValues(boolean includeId);
 	
-	public abstract void parseValues(String[] columns, Object[] values);
+	public abstract void parseValues(ContentValues contentValues);
 	
 	/**
 	 * @param state the state to set

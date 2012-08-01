@@ -2,6 +2,8 @@ package uk.co.pussycatdesign.App.WedAssist;
 
 import java.util.ArrayList;
 
+import android.content.ContentValues;
+
 import uk.co.pussycatdesign.Data.EntityState;
 import uk.co.pussycatdesign.Data.SelfTrackingEntity;
 
@@ -137,6 +139,12 @@ public class Extra extends SelfTrackingEntity {
 	public void setGuestId(int pfk_GuestId) {
 		this.pfk_GuestId = pfk_GuestId;
 		this.setState(EntityState.CHANGED);
+	}
+
+	@Override
+	public void parseValues(ContentValues contentValues) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

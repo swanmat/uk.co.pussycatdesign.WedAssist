@@ -1,10 +1,13 @@
 package uk.co.pussycatdesign.Data;
 
 import java.util.ArrayList;
+import android.content.*;
 
 public class DbResult extends Object {
 	
 	private ArrayList<Object> resultSet;
+	
+	ContentValues rSet = null;
 	
 	public DbResult()
 	{
@@ -14,6 +17,16 @@ public class DbResult extends Object {
 	public void addElement(Object value)
 	{
 		resultSet.add(value);
+	}
+	
+	public void setContent(ContentValues contentValues)
+	{
+		this.rSet = contentValues;
+	}
+	
+	public ContentValues getContentValues()
+	{
+		return rSet;
 	}
 	
 	public Object[] toArray()
@@ -40,8 +53,6 @@ public class DbResult extends Object {
 			res = res + String.format("%s ", resultSet.get(i).toString());
 		}
 		return String.format("%s Columns returned. Values: %s ", String.valueOf(countColumns()), res);
-		
-		
 	}
 	
 	public String toString()
