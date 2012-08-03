@@ -1,10 +1,6 @@
 package uk.co.pussycatdesign.Data;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
-import java.util.ListIterator;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
@@ -15,9 +11,7 @@ public class DbFactory<T extends DbTable, D extends DataContext>
 		
 	private T referenceItem;
 	private D dataContext;
-	//private List<DbColumn> tableDescriptor;
 	private Hashtable<String, Object> tableSchema;
-	//private Cursor results;
 	
 	public DbFactory(T ref, D db)
 	{
@@ -198,17 +192,13 @@ public class DbFactory<T extends DbTable, D extends DataContext>
 		return contentValues;
 	}
 
-	public long addItem(ArrayList<String> values) throws UnsupportedOperationException
+	public long addItem(ContentValues item) throws UnsupportedOperationException
 	{
-		ArrayList<String> columns = referenceItem.getTableColumns(true);
-		
-		ContentValues vals = this.combine(columns, values);
-		
-		if (vals != null)
+		if (item != null)
 		{
 			try
 			{
-				long result = dataContext.open().insert(referenceItem.getTableName(), vals);
+				long result = dataContext.open().insert(referenceItem.getTableName(), item);
 				dataContext.close();
 				return result;
 			}
@@ -222,27 +212,6 @@ public class DbFactory<T extends DbTable, D extends DataContext>
 			return -1 ;
 			
 		}
-	}
-	
-	private ContentValues combine(ArrayList<String> columns, ArrayList<String> values)
-	{
-		ContentValues vals = null;
-		
-		if(columns.size() == values.size())
-		{
-			System.out.println("WA: Content Col/Val Match");
-			vals = new ContentValues();
-			
-			for (int i = 0; i<= columns.size() -1; i++)
-			{
-				vals.put(columns.get(i), values.get(i));
-			}
-		}
-		else
-		{
-			System.out.println("WA: Content Col/Val Mismatch: Null Returned");
-		}
-		return vals;
 	}
 	
 	public long removeItem(int id) throws UnsupportedOperationException

@@ -5,8 +5,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.ListIterator;
 
-import android.util.Log;
-
 public abstract class DbTable {  //NB TODO: Make Generic Static DB Table class with this as static internal class?
 
 	private List<DbColumn> values;

@@ -1,12 +1,7 @@
 package uk.co.pussycatdesign.Data;
 
 import java.util.ArrayList;
-import java.util.ListIterator;
-
-import android.content.Context;
-import uk.co.pussycatdesign.App.WedAssist.Guest;
-import uk.co.pussycatdesign.App.WedAssist.Db.GuestDataTable;
-import uk.co.pussycatdesign.App.WedAssist.Db.WedAssistDb;
+import android.content.ContentValues;
 import uk.co.pussycatdesign.Interfaces.DataContext;
 
 public abstract class DbManagedList<E extends SelfTrackingEntity,
@@ -24,19 +19,18 @@ public abstract class DbManagedList<E extends SelfTrackingEntity,
 	
 	protected int parseResult(DbResultSet resultSet)
 	{
-		String columnNames[] = resultSet.getDbColumns();
 		int addCount = 0;
 	
 		for (int index = 0; index < resultSet.size(); index ++)
 		{
 			DbResult result = resultSet.get(index);
-			this.add(index, parse(columnNames, result));
+			this.add(index, parse(result.getContentValues()));
 			addCount ++;
 		}
 		return addCount;
 	}
 	
-	protected abstract E parse (String[] columns, DbResult item);
+	protected abstract E parse (ContentValues item);
 	
 	public boolean loadView()
 	{

@@ -1,9 +1,6 @@
 package uk.co.pussycatdesign.App.WedAssist;
 
-import java.util.ArrayList;
-
 import android.content.ContentValues;
-
 import uk.co.pussycatdesign.Data.SelfTrackingEntity;
 
 public class Guest extends SelfTrackingEntity {
@@ -34,6 +31,25 @@ public class Guest extends SelfTrackingEntity {
 	private String tel;
 	private String email;
 	private String notes;
+	
+	@Override
+	public ContentValues getValues(boolean primaryKey) {
+		
+		ContentValues vals = new ContentValues(10);
+		
+		if (primaryKey)
+			vals.put(PRIMARY_KEY, id);
+		
+		vals.put(TBL_GUESTS_EMAIL, email);
+		vals.put(TBL_GUESTS_EXTRAS, extras);
+		vals.put(TBL_GUESTS_FNAME, fname);
+		vals.put(TBL_GUESTS_NOTES, notes);
+		vals.put(TBL_GUESTS_PHOTO, photo);
+		vals.put(TBL_GUESTS_SNAME, sname);
+		vals.put(TBL_GUESTS_TEL, tel);
+		
+		return vals;
+	}
 	
 	@Override
 	public void parseValues(ContentValues contentValues) {
@@ -70,25 +86,6 @@ public class Guest extends SelfTrackingEntity {
 	
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	
-	@Override
-	public ArrayList<String> getValues(boolean id) 
-	{
-		ArrayList<String> values = new ArrayList<String>();
-		if (id)
-		{
-			values.add(String.valueOf(this.id));
-		}
-		values.add(String.valueOf(this.photo));
-		values.add(this.fname);
-		values.add(this.sname);
-		values.add(this.tel);
-		values.add(this.email);
-		values.add(this.notes);
-		
-		return values;
 	}
 	
 	//Constructor

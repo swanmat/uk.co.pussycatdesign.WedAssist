@@ -1,7 +1,5 @@
 package uk.co.pussycatdesign.Data;
 
-import java.util.ArrayList;
-
 import android.content.ContentValues;
 
 public abstract class SelfTrackingEntity  
@@ -15,7 +13,7 @@ public abstract class SelfTrackingEntity
 		return state;
 	}
 	
-	public abstract ArrayList<String> getValues(boolean includeId);
+	public abstract ContentValues getValues(boolean includeId);
 	
 	public abstract void parseValues(ContentValues contentValues);
 	

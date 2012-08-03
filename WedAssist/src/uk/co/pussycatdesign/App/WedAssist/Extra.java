@@ -1,9 +1,6 @@
 package uk.co.pussycatdesign.App.WedAssist;
 
-import java.util.ArrayList;
-
 import android.content.ContentValues;
-
 import uk.co.pussycatdesign.Data.EntityState;
 import uk.co.pussycatdesign.Data.SelfTrackingEntity;
 
@@ -36,51 +33,35 @@ public class Extra extends SelfTrackingEntity {
 		this.setState(EntityState.UNCHANGED);
 	}
 	
+	@Override
+	public void parseValues(ContentValues contentValues) {
+	
+		if(contentValues.containsKey(TBL_EXTRAS_ID))
+			this.id = contentValues.getAsInteger(TBL_EXTRAS_ID);
+		if(contentValues.containsKey(TBL_EXTRAS_NAME))
+			this.name = contentValues.getAsString(TBL_EXTRAS_NAME);
+		if(contentValues.containsKey(TBL_EXTRAS_TYPE))
+			this.type = ExtraType.valueOf(contentValues.getAsString(TBL_EXTRAS_TYPE));
+		if(contentValues.containsKey(TBL_EXTRAS_PFK))
+			this.pfk_GuestId = contentValues.getAsInteger(TBL_EXTRAS_PFK);
+	}
+	
+	@Override
+	public ContentValues getValues(boolean includeId) {
+		
+		ContentValues cv = new ContentValues(4);
+		
+		if (includeId)
+			cv.put(TBL_EXTRAS_ID, this.id);
+		cv.put(TBL_EXTRAS_NAME, this.name);
+		cv.put(TBL_EXTRAS_TYPE, this.type.name());
+		cv.put(TBL_EXTRAS_PFK, this.pfk_GuestId);
+		
+		return cv;		
+	}
 
 	public Extra() {
 		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public ArrayList<String> getValues(boolean includeId) {
-		ArrayList<String> values = new ArrayList<String>();
-		if (includeId)
-		{
-			values.add(String.valueOf(this.id));
-		}
-		values.add(this.name);
-		values.add(this.type.name());
-		values.add(String.valueOf(this.pfk_GuestId));
-		
-		return values;
-	}
-
-	@Override
-	public void parseValues(String[] columns, Object[] values) {
-		for (int column = 0; column < columns.length; column ++)
-		{
-			String columnName = columns[column];
-			Object columnValue = values[column];
-			
-				if(columnName.compareTo(TBL_EXTRAS_ID) == 0)
-				{
-					Integer iVal = (Integer) columnValue;
-					this.setId(iVal.intValue());
-				}
-				else if (columnName.compareTo(TBL_EXTRAS_NAME) == 0)
-				{
-					this.setName((String) columnValue);
-				}
-				else if (columnName.compareTo(TBL_EXTRAS_TYPE) == 0)
-				{
-					this.setType(ExtraType.valueOf((String)columnValue));
-				}
-				else if (columnName.compareTo(TBL_EXTRAS_PFK) == 0)
-				{
-					Integer iVal =(Integer) columnValue;
-					this.setGuestId(iVal.intValue());
-				}
-		}
 	}
 	
 	/**
@@ -140,11 +121,4 @@ public class Extra extends SelfTrackingEntity {
 		this.pfk_GuestId = pfk_GuestId;
 		this.setState(EntityState.CHANGED);
 	}
-
-	@Override
-	public void parseValues(ContentValues contentValues) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

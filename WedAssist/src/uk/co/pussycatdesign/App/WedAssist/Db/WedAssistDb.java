@@ -14,7 +14,7 @@ public class WedAssistDb implements DataContext
 	
 	// Guest Table
 	private static final String DB_NAME = "WedAssistDb" ;
-	private static final int SCHEMA_VERSION = 3 ;
+	private static final int SCHEMA_VERSION = 4 ;
 	
 	private DbHelper dbHelper;
 	private final Context context;

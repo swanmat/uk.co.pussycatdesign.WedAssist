@@ -1,10 +1,10 @@
 package uk.co.pussycatdesign.App.WedAssist;
 
+import android.content.ContentValues;
 import uk.co.pussycatdesign.App.WedAssist.Db.ExtraDataTable;
 import uk.co.pussycatdesign.App.WedAssist.Db.WedAssistDb;
 import uk.co.pussycatdesign.Data.DbFactory;
 import uk.co.pussycatdesign.Data.DbManagedList;
-import uk.co.pussycatdesign.Data.DbResult;
 
 public class ExtraList extends DbManagedList<Extra, ExtraDataTable, WedAssistDb>
 {
@@ -18,14 +18,6 @@ public class ExtraList extends DbManagedList<Extra, ExtraDataTable, WedAssistDb>
 	{
 		super(new DbFactory<ExtraDataTable, WedAssistDb>(new ExtraDataTable(), new WedAssistDb()));
 		loadExtras(guestId);
-	}
-
-	@Override
-	protected Extra parse(String[] columns, DbResult item)
-	{
-		Extra thisExtra = new Extra();
-		thisExtra.parseValues(columns, item.getResultSet().toArray());
-		return thisExtra;
 	}
 	
 	public int loadExtras(int guestId)
@@ -41,5 +33,12 @@ public class ExtraList extends DbManagedList<Extra, ExtraDataTable, WedAssistDb>
 		String whereClause = String.format("%s=?", ExtraDataTable.getExtrasPFK());
 		String whereArgs[] = {String.valueOf(guestId)};
 		return this.removeWhere(whereClause, whereArgs);
+	}
+
+	@Override
+	protected Extra parse(ContentValues item) {
+		Extra thisExtra = new Extra();
+		thisExtra.parseValues(item);
+		return thisExtra;
 	}
 }

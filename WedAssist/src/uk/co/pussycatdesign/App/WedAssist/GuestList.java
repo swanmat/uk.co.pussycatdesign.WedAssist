@@ -1,10 +1,10 @@
 package uk.co.pussycatdesign.App.WedAssist;
 
+import android.content.ContentValues;
 import uk.co.pussycatdesign.App.WedAssist.Db.GuestDataTable;
 import uk.co.pussycatdesign.App.WedAssist.Db.WedAssistDb;
 import uk.co.pussycatdesign.Data.DbFactory;
 import uk.co.pussycatdesign.Data.DbManagedList;
-import uk.co.pussycatdesign.Data.DbResult;
 
 
 public class GuestList extends DbManagedList<Guest, GuestDataTable, WedAssistDb> {
@@ -17,10 +17,9 @@ public class GuestList extends DbManagedList<Guest, GuestDataTable, WedAssistDb>
 	}
 
 	@Override
-	protected Guest parse(String[] columnNames, DbResult item) {
-		
+	protected Guest parse(ContentValues item) {
 		Guest thisGuest = new Guest();
-		thisGuest.parseValues(columnNames, item.toArray());
+		thisGuest.parseValues(item);
 		return thisGuest;
 	}
 }

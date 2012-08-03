@@ -1,18 +1,45 @@
 package uk.co.pussycatdesign.App.WedAssist;
 
-import java.util.ArrayList;
-
 import android.content.ContentValues;
-
 import uk.co.pussycatdesign.Data.EntityState;
 import uk.co.pussycatdesign.Data.SelfTrackingEntity;
 
-public class Role extends SelfTrackingEntity{
+public final class Role extends SelfTrackingEntity{
+
+	protected static final String TBL_ROLES_ID = "Id";
+	protected static final String TBL_ROLES_PFK = "GuestId";
+	protected static final String TBL_ROLES_ROLE = "Role";
+	protected static final String TBL_ROLES_OTHER = "Info";
 	
 	private int id;
 	private int pfk_guestId;
 	private GuestRole role;
 	private String otherInfo;
+	
+	@Override
+	public void parseValues(ContentValues contentValues) {
+		
+		if(contentValues.containsKey(TBL_ROLES_ID))
+			this.id=contentValues.getAsInteger(TBL_ROLES_ID);
+		if(contentValues.containsKey(TBL_ROLES_PFK))
+			this.pfk_guestId = contentValues.getAsInteger(TBL_ROLES_PFK);
+		if(contentValues.containsKey(TBL_ROLES_ROLE))
+			this.role = GuestRole.valueOf(contentValues.getAsString(TBL_ROLES_ROLE));
+		if(contentValues.containsKey(TBL_ROLES_OTHER))
+			this.otherInfo = contentValues.getAsString(TBL_ROLES_OTHER);
+	}
+
+	@Override
+	public ContentValues getValues(boolean includeId) {
+		
+		ContentValues cv = new ContentValues(4);
+		if(includeId)
+			cv.put(TBL_ROLES_ID, id);
+		cv.put(TBL_ROLES_PFK, pfk_guestId);
+		cv.put(TBL_ROLES_ROLE, role.name());
+		cv.put(TBL_ROLES_OTHER, otherInfo);
+		return cv;
+	}
 	
 	public Role(int guestId, GuestRole role, String otherInformation)
 	{
@@ -86,23 +113,5 @@ public class Role extends SelfTrackingEntity{
 	public void setOtherInfo(String otherInfo) {
 		this.otherInfo = otherInfo;
 		this.setState(EntityState.CHANGED);
-	}
-
-	@Override
-	public ArrayList<String> getValues(boolean includeId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void parseValues(String[] columns, Object[] values) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void parseValues(ContentValues contentValues) {
-		// TODO Auto-generated method stub
-		
 	}
 }

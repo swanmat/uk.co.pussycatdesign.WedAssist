@@ -47,9 +47,8 @@ public class GuestDataTable extends DbTable {
 		this.addFieldValue(new DbColumn(TBL_GUESTS_SNAME, DbFieldType.STRING, DbFieldModifier.NOT_NULL ));
 		this.addFieldValue(new DbColumn(TBL_GUESTS_TEL, DbFieldType.STRING, DbFieldModifier.NOT_NULL));
 		this.addFieldValue(new DbColumn(TBL_GUESTS_EMAIL, DbFieldType.STRING, DbFieldModifier.NOT_NULL));
-		//this.addFieldValue(new DbColumn(TBL_GUESTS_INVITATION, DbFieldType.BOOLEAN, DbFieldModifier.NOT_NULL));
-		//this.addFieldValue(new DbColumn(TBL_GUESTS_RSVP, DbFieldType.BOOLEAN, DbFieldModifier.NOT_NULL));
 		this.addFieldValue(new DbColumn(TBL_GUESTS_NOTES, DbFieldType.STRING, DbFieldModifier.NOT_NULL));
+		this.addFieldValue(new DbColumn(TBL_GUESTS_EXTRAS, DbFieldType.INT, DbFieldModifier.NOT_NULL));
 	}
 
 	@Override
